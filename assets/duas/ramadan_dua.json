@@ -1,0 +1,145 @@
+{
+  "ramadan_duas": [
+    {
+      "category": {
+        "en": "Moon Sighting",
+        "ar": "رؤية الهلال",
+        "hi": "चांद देखना"
+      },
+      "duas": [
+        {
+          "id": 1,
+          "title": {
+            "en": "Ramadan Moon Sighting Dua",
+            "ar": "دعاء رؤية هلال رمضان",
+            "hi": "रमजान का चांद देखने की दुआ"
+          },
+          "arabic": "اللَّهُمَّ أَهْلِلْهُ عَلَيْنَا بِالْيُمْنِ وَالإِيمَانِ وَالسَّلاَمَةِ وَالإِسْلاَمِ رَبِّي وَرَبُّكَ اللَّهُ",
+          "transliteration": {
+            "en": "Allahumma ahlilhu `alainā bil-yumni wal-iman, was-salamati wal-Islam, rabbi wa rabbuk Allah",
+            "ar": "اللهم أهله علينا باليمن والإيمان والسلامة والإسلام ربي وربك الله",
+            "hi": "अल्लाहुम्मा अह्लिल्हु अलैना बिल-युम्नि वल-ईमान, वस-सलामति वल-इस्लाम, रब्बी व रब्बुक अल्लाह"
+          },
+          "translation": {
+            "en": "O Allah, bring it over us with blessing and faith, and security and Islam. My Lord and your Lord is Allah.",
+            "ar": "اللهم أطلقه علينا بالبركة والإيمان، والأمان والإسلام. ربي وربك هو الله.",
+            "hi": "हे अल्लाह, इसे हम पर आशीर्वाद और विश्वास, सुरक्षा और इस्लाम के साथ लाएं। मेरा रब और आपका रब अल्लाह है।"
+          },
+          "reference": "Tirmidhi: 3451"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Sehri (Pre-Dawn)",
+        "ar": "السحور (قبل الفجر)",
+        "hi": "सेहरी (सुबह से पहले)"
+      },
+      "duas": [
+        {
+          "id": 2,
+          "title": {
+            "en": "Sehri Dua - 1",
+            "ar": "دعاء السحور - ١",
+            "hi": "सेहरी की दुआ - १"
+          },
+          "arabic": "بِسْمِ اللَّهِ",
+          "transliteration": {
+            "en": "Bismillah",
+            "ar": "بسم الله",
+            "hi": "बिस्मिल्लाह"
+          },
+          "translation": {
+            "en": "In the name of Allah",
+            "ar": "باسم الله",
+            "hi": "अल्लाह के नाम से"
+          },
+          "reference": "NOTE: There is no reference in Hadith for this Dua"
+        },
+        {
+          "id": 3,
+          "title": {
+            "en": "Sehri Dua - 2",
+            "ar": "دعاء السحور - ٢",
+            "hi": "सेहरी की दुआ - २"
+          },
+          "arabic": "وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ",
+          "transliteration": {
+            "en": "Wa bisawmi ghadinn nawaiytu min shahri Ramadan",
+            "ar": "وبصوم غد نويت من شهر رمضان",
+            "hi": "व बिसौमि ग़दिन्न नवैतु मिन शह्रि रमज़ान"
+          },
+          "translation": {
+            "en": "I intend to keep the fast for tomorrow in the month of Ramadan",
+            "ar": "نويت صيام غد من شهر رمضان.",
+            "hi": "मैं रमज़ान के महीने में कल के रोज़े की नीयत करता हूं।"
+          },
+          "reference": ""
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Iftar (Breaking Fast)",
+        "ar": "الإفطار",
+        "hi": "इफ्तार"
+      },
+      "duas": [
+        {
+          "id": 4,
+          "title": {
+            "en": "Iftar Dua - 1",
+            "ar": "دعاء الإفطار - ١",
+            "hi": "इफ्तार की दुआ - १"
+          },
+          "arabic": "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ",
+          "transliteration": {
+            "en": "Dhahaba al-zama' wa abtalat al-'urooq wa thabata al-ajr in sha Allaah",
+            "ar": "ذهب الظمأ وابتلت العروق وثبت الأجر إن شاء الله",
+            "hi": "ज़हबज़-ज़मा व अब्तलतिल-उरूक़ व सबतल-अज्र इन शा अल्लाह"
+          },
+          "translation": {
+            "en": "Thirst is gone, the veins are moistened and the reward is certain if Allaah wills.",
+            "ar": "ذهب الظمأ وابتلت العروق وثبت الأجر إن شاء الله.",
+            "hi": "प्यास चली गई, नसें तर हो गईं और इन्शा अल्लाह सवाब तय हो गया।"
+          },
+          "reference": "Abu Dawud: 2357"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Ashra Duas",
+        "ar": "أدعية العشر",
+        "hi": "अशरा की दुआएं"
+      },
+      "subcategory": {
+        "en": "First Ashra (Mercy)",
+        "ar": "العشر الأول (الرحمة)",
+        "hi": "पहला अशरा (रहमत)"
+      },
+      "duas": [
+        {
+          "id": 7,
+          "title": {
+            "en": "First 10 Days Dua",
+            "ar": "دعاء العشر الأوائل",
+            "hi": "पहले 10 दिनों की दुआ"
+          },
+          "arabic": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغيثُ",
+          "transliteration": {
+            "en": "Ya Hayyu Ya Qayyum bi rehmatika astaghees",
+            "ar": "يا حي يا قيوم برحمتك أستغيث",
+            "hi": "या हय्यु या क़य्यूम बि रहमतिका अस्तग़ीस"
+          },
+          "translation": {
+            "en": "Oh Everliving, The Everlasting, I seek Your help through Your mercy.",
+            "ar": "يا حي يا قيوم برحمتك أستغيث.",
+            "hi": "हे सदा जीवित, हे सदा कायम, मैं तेरी रहमत के सहारे तेरी मदद मांगता हूं।"
+          },
+          "reference": ""
+        }
+      ]
+    }
+  ]
+}

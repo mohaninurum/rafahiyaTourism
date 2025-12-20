@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "167145494685",
+    "firebase_url": "https://rafahiya-tourism-default-rtdb.firebaseio.com",
+    "project_id": "rafahiya-tourism",
+    "storage_bucket": "rafahiya-tourism.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167145494685:android:961c5671ef34bb915b9c74",
+        "android_client_info": {
+          "package_name": "com.example.rafahiyatourism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167145494685-epo1rg6k3gdjb4pm5vd8cd10v08ct7qn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rafahiyatourism",
+            "certificate_hash": "639d7fc6623c20733eeeab562c64340f31194d29"
+          }
+        },
+        {
+          "client_id": "167145494685-msuvhpd7dchtanqne5lg368e0hf94025.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rafahiyatourism",
+            "certificate_hash": "2ccda648606bf0bc903c57f4e6f75b6462615fcd"
+          }
+        },
+        {
+          "client_id": "167145494685-q2gkaur0078mncqro69urad78pd8a55f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rafahiyatourism",
+            "certificate_hash": "af79c428f76bedf2551777cb6a49c926871eb2e3"
+          }
+        },
+        {
+          "client_id": "167145494685-9g5fc9lm78rauh0pd651ortr05vau3t4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlOv9CLPjehyKLCoDJ-ZqwVw81hqAKwUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167145494685-9g5fc9lm78rauh0pd651ortr05vau3t4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "167145494685-723kkq1osof01l4gitbvtt5l1gns6k4l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rafahiyatourism"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167145494685:android:314492167ed3dae15b9c74",
+        "android_client_info": {
+          "package_name": "com.meuzzein.rafahiyatourism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167145494685-11aokii13cfa2glgsbl2qg1vnbe5jac4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meuzzein.rafahiyatourism",
+            "certificate_hash": "2ccda648606bf0bc903c57f4e6f75b6462615fcd"
+          }
+        },
+        {
+          "client_id": "167145494685-9g5fc9lm78rauh0pd651ortr05vau3t4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlOv9CLPjehyKLCoDJ-ZqwVw81hqAKwUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167145494685-9g5fc9lm78rauh0pd651ortr05vau3t4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "167145494685-723kkq1osof01l4gitbvtt5l1gns6k4l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rafahiyatourism"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167145494685:android:6ae01b44e6f99f255b9c74",
+        "android_client_info": {
+          "package_name": "com.rafahiya.tourism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167145494685-3erudubt113smr18cc5t2k49lk2ddtlm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rafahiya.tourism",
+            "certificate_hash": "2ccda648606bf0bc903c57f4e6f75b6462615fcd"
+          }
+        },
+        {
+          "client_id": "167145494685-9g5fc9lm78rauh0pd651ortr05vau3t4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlOv9CLPjehyKLCoDJ-ZqwVw81hqAKwUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167145494685-9g5fc9lm78rauh0pd651ortr05vau3t4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "167145494685-723kkq1osof01l4gitbvtt5l1gns6k4l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rafahiyatourism"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

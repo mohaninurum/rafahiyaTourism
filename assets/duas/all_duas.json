@@ -1,0 +1,314 @@
+{
+  "all_duas": [
+    {
+      "category": {
+        "en": "After Finishing a Meal",
+        "ar": "بعد الانتهاء من الوجبة",
+        "hi": "भोजन समाप्त करने के बाद"
+      },
+      "duas": [
+        {
+          "id": 1,
+          "title": {
+            "en": "After Finishing Meal - 1",
+            "ar": "بعد الانتهاء من الطعام - ١",
+            "hi": "भोजन समाप्त करने के बाद - १"
+          },
+          "arabic": "الْحَمْدُ لِلَّهِ الَّذِى اطْعَمَنَا وَسَقَانَا ، وَجَعَلنَا مُسْلِمِينَ",
+          "transliteration": {
+            "en": "Alhamdulilahil ladhi at'amana, wasaqana, waj'alna min-al Muslimeen",
+            "ar": "الحمد لله الذي أطعمنا وسقانا، وجعلنا مسلمين",
+            "hi": "अल्हम्दुलिल्लाहिल लधी अत'मना, वसक़ाना, वज'अलना मिन-अल मुस्लिमीन"
+          },
+          "translation": {
+            "en": "Praise be to Allah Who has fed us and given us drink and made us Muslims.",
+            "ar": "الحمد لله الذي أطعمنا وسقانا وجعلنا مسلمين.",
+            "hi": "अल्लाह की प्रशंसा जिसने हमें खाना खिलाया और पानी पिलाया और हमें मुसलमान बनाया।"
+          },
+          "reference": ""
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "After Leaving Toilet",
+        "ar": "بعد الخروج من المرحاض",
+        "hi": "शौचालय छोड़ने के बाद"
+      },
+      "duas": [
+        {
+          "id": 2,
+          "title": {
+            "en": "After Leaving Toilet - 1",
+            "ar": "بعد الخروج من المرحاض - ١",
+            "hi": "शौचालय छोड़ने के बाद - १"
+          },
+          "arabic": "غُفْرَانَكَ",
+          "transliteration": {
+            "en": "Ghufranak",
+            "ar": "غفرانك",
+            "hi": "ग़ुफ़्रानक"
+          },
+          "translation": {
+            "en": "I ask You (Allah) for forgiveness.",
+            "ar": "أطلب منك (الله) المغفرة.",
+            "hi": "मैं आप (अल्लाह) से माफी मांगता हूं।"
+          },
+          "reference": ""
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Remembrance After Prayer",
+        "ar": "الأذكار بعد الصلاة",
+        "hi": "नमाज के बाद की याद"
+      },
+      "duas": [
+        {
+          "id": 3,
+          "title": {
+            "en": "Remembrance After Prayer - 1",
+            "ar": "ذكر بعد الصلاة - ١",
+            "hi": "नमाज के बाद की याद - १"
+          },
+          "arabic": "أَسْتَغْفِرُ اللَّهَ . (ثَلاثاً) اللَّهُمَّ أَنْتَ السَّلاَمُ، وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالإِكْرَامِ",
+          "transliteration": {
+            "en": "Astaghfirul-lah (three times) Allahumma antas-salam waminkas-salam, tabarakta ya thal-jalali wal-ikram",
+            "ar": "أستغفر الله (ثلاث مرات) اللهم أنت السلام ومنك السلام، تباركت يا ذا الجلال والإكرام",
+            "hi": "अस्तग़फिरुल्लाह (तीन बार) अल्लाहुम्मा अंतस-सलाम वमिन्कस-सलाम, तबारकता या जल-जलाली वल-इकराम"
+          },
+          "translation": {
+            "en": "I ask Allah for forgiveness.(three times) O Allah, You are As-Salam and from You is all peace, blessed are You, O Possessor of majesty and honour.",
+            "ar": "أستغفر الله (ثلاث مرات) اللهم أنت السلام ومنك السلام، تباركت يا ذا الجلال والإكرام.",
+            "hi": "मैं अल्लाह से माफी मांगता हूं (तीन बार)। हे अल्लाह, आप अस-सलाम हैं और आपसे ही सभी शांति है, आप धन्य हैं, हे महिमा और सम्मान के स्वामी।"
+          },
+          "reference": "Muslim 1:414"
+        },
+        {
+          "id": 4,
+          "title": {
+            "en": "Remembrance After Prayer - 2",
+            "ar": "ذكر بعد الصلاة - ٢",
+            "hi": "नमाज के बाद की याद - २"
+          },
+          "arabic": "لَا إلَهَ إِلاَّ اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، اللَّهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ",
+          "transliteration": {
+            "en": "La ilaha illal-lahu wahdahu la shareeka lah, lahul-mulku walahul-hamd, wahuwa AAala kulli shayin qadeer, allahumma la maniAAa lima aAAtayt, wala muAAtiya lima manaAAt, wala yanfaAAu thal-jaddi minkal-jad",
+            "ar": "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير، اللهم لا مانع لما أعطيت، ولا معطي لما منعت، ولا ينفع ذا الجد منك الجد",
+            "hi": "ला इलाहा इल्लल्लाहु वहदहु ला शरीका लह, लहुल-मुल्कु वलहुल-हम्द, वहुवा अला कुल्ली शयिन क़दीर, अल्लाहुम्मा ला मानिआ लिमा आतैत, वला मुआतिया लिमा मनअत, वला यनफउ जल-जद्दी मिनकल-जद"
+          },
+          "translation": {
+            "en": "None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise and He is over all things omnipotent.O Allah, none can prevent what You have willed to bestow and none can bestow what You have willed to prevent, and no wealth or majesty can benefit anyone, as from You is all wealth and majesty.",
+            "ar": "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. اللهم لا مانع لما أعطيت، ولا معطي لما منعت، ولا ينفع ذا الجد منك الجد.",
+            "hi": "अल्लाह के सिवा कोई पूज्य नहीं, वह अकेला है, उसका कोई साझी नहीं, उसी के लिए सारी बादशाही और प्रशंसा है और वह हर चीज़ पर सर्वशक्तिमान है। हे अल्लाह, कोई भी उसे रोक नहीं सकता जो तू देने का इरादा करे और कोई भी उसे नहीं दे सकता जो तू रोकना चाहे, और कोई धन या महिमा किसी के काम नहीं आ सकती, क्योंकि सारा धन और महिमा तेरे ही पास है।"
+          },
+          "reference": "Al-Bukhari 1:255, Muslim 414"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "After Rainfall",
+        "ar": "بعد المطر",
+        "hi": "बारिश के बाद"
+      },
+      "duas": [
+        {
+          "id": 10,
+          "title": {
+            "en": "After Rainfall - 1",
+            "ar": "بعد المطر - ١",
+            "hi": "बारिश के बाद - १"
+          },
+          "arabic": "مُطِرْنَا بِفَضْلِ اللهِ وَ رَحْمَتِهِ",
+          "transliteration": {
+            "en": "Mutirnaa bifadhlillaahi wa rahmatihi",
+            "ar": "مطرنا بفضل الله ورحمته",
+            "hi": "मुतिर्ना बिफज़्लिल्लाही व रहमतिही"
+          },
+          "translation": {
+            "en": "We have been given rain by the grace and mercy of Allah.",
+            "ar": "مطرنا بفضل الله ورحمته.",
+            "hi": "हमें अल्लाह की कृपा और दया से बारिश दी गई है।"
+          },
+          "reference": "Al-Bukhari 1:205, Muslim 1:83"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Before Entering Toilet",
+        "ar": "قبل دخول المرحاض",
+        "hi": "शौचालय में प्रवेश करने से पहले"
+      },
+      "duas": [
+        {
+          "id": 26,
+          "title": {
+            "en": "Before Toilet - 1",
+            "ar": "قبل المرحاض - ١",
+            "hi": "शौचालय से पहले - १"
+          },
+          "arabic": "(بِسْمِ اللَّهِ). اللَّهُـمَّ إِنِّي أَعُـوذُ بِـكَ مِـنَ الْخُـبْثِ وَالْخَبَائِثِ",
+          "transliteration": {
+            "en": "(Bismil-lah) allahumma innee aAAoothu bika minal-khubthi wal-khaba-ith",
+            "ar": "(بسم الله) اللهم إني أعوذ بك من الخبث والخبائث",
+            "hi": "(बिस्मिल्लाह) अल्लाहुम्मा इन्नी आउथु बिका मिनल-खुब्थि वल-खबाइथ"
+          },
+          "translation": {
+            "en": "(In the name of Allah). O Allah, I take refuge with you from all evil and evil-doers.",
+            "ar": "(بسم الله) اللهم إني أعوذ بك من الخبث والخبائث.",
+            "hi": "(अल्लाह के नाम से)। हे अल्लाह, मैं सभी बुराई और बुरे करने वालों से तेरी शरण मांगता हूं।"
+          },
+          "reference": "Al-Bukhari 1:45, Muslim 1:283"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Before Sleeping",
+        "ar": "قبل النوم",
+        "hi": "सोने से पहले"
+      },
+      "duas": [
+        {
+          "id": 27,
+          "title": {
+            "en": "Before Sleeping - 1",
+            "ar": "قبل النوم - ١",
+            "hi": "सोने से पहले - १"
+          },
+          "arabic": "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، فَإِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا، بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ",
+          "transliteration": {
+            "en": "Bismika rabbee wadaAAtu janbee wabika arfaAAuh, fa-in amsakta nafsee farhamha, wa-in arsaltaha fahfathha bima tahfathu bihi AAibadakas-saliheen",
+            "ar": "باسمك ربي وضعت جنبي، وبك أرفعه، فإن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها، بما تحفظ به عبادك الصالحين",
+            "hi": "बिस्मिका रब्बी वदअतु जन्बी, वबिका अर्फउह, फा-इन अमसकता नफ्सी फरहम्हा, व-इन अर्सलतहा फहफज़्हा, बिमा तहफज़ु बिही इबादकस-सालिहीन"
+          },
+          "translation": {
+            "en": "In Your name my Lord, I lie down and in Your name I rise, so if You should take my soul then have mercy upon it, and if You should return my soul then protect it in the manner You do so with Your righteous servants.",
+            "ar": "باسمك ربي وضعت جنبي، وبك أرفعه، فإن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها، بما تحفظ به عبادك الصالحين.",
+            "hi": "तेरे नाम से हे मेरे रब, मैं लेटता हूं और तेरे नाम से उठता हूं, इसलिए यदि तू मेरी रूह ले ले तो उस पर दया कर, और यदि तू मेरी रूह वापस करे तो उसे उस तरह से सुरक्षित रख जैसे तू अपने नेक बंदों को सुरक्षित रखता है।"
+          },
+          "reference": "Al-Bukari 11:126"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Before Starting Anything",
+        "ar": "قبل البدء في أي شيء",
+        "hi": "कुछ भी शुरू करने से पहले"
+      },
+      "duas": [
+        {
+          "id": 28,
+          "title": {
+            "en": "Before Starting - 1",
+            "ar": "قبل البدء - ١",
+            "hi": "शुरुआत से पहले - १"
+          },
+          "arabic": "بِسْمِ اللّٰہِ الرَّحْمٰنِ الرَّحِيْمِ",
+          "transliteration": {
+            "en": "Bismi-llāhi r-raḥmāni r-raḥīm",
+            "ar": "بسم الله الرحمن الرحيم",
+            "hi": "बिस्मिल्लाहिर-रहमानिर-रहीम"
+          },
+          "translation": {
+            "en": "In the name of Allah , the Entirely Merciful, the Especially Merciful.",
+            "ar": "بسم الله الرحمن الرحيم.",
+            "hi": "अल्लाह के नाम से, जो बड़ा मेहरबान, निहायत रहम वाला है।"
+          },
+          "reference": "Sunnah of Prophet (SAW)"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "During Worry/Sorrow",
+        "ar": "أثناء القلق/الحزن",
+        "hi": "चिंता/दुख के दौरान"
+      },
+      "duas": [
+        {
+          "id": 25,
+          "title": {
+            "en": "During Worry - 1",
+            "ar": "أثناء القلق - ١",
+            "hi": "चिंता के दौरान - १"
+          },
+          "arabic": "اللّهُـمَّ إِنِّي أَعْوذُ بِكَ مِنَ الهَـمِّ وَ الْحُـزْنِ، والعًجْـزِ والكَسَلِ والبُخْـلِ والجُـبْنِ، وضَلْـعِ الـدَّيْنِ وغَلَبَـةِ الرِّجال",
+          "transliteration": {
+            "en": "Allaahumma 'innee 'a'oothu bika minal-hammi walhazani, wal'ajzi walkasali, walbukhli waljubni, wa dhala'id-dayni wa ghalabatir-rijaal",
+            "ar": "اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل والبخل والجبن، وضلع الدين وغلبة الرجال",
+            "hi": "अल्लाहुम्मा इन्नी आउथु बिका मिनल-हम्मि वलहज़नी, वलअज्जि वलकसली, वलबुख्लि वलजुब्नि, व ज़लईद-दैनी व ग़लबतिर-रिजाल"
+          },
+          "translation": {
+            "en": "O Allah, I seek refuge in you from grief and sadness, from weakness and from laziness, from miserliness and from cowardice, from being overcome by debt and overpowered by men (i .e . others).",
+            "ar": "اللهم إني أعوذ بك من الهم والحزن، والعجز والكسل والبخل والجبن، وضلع الدين وغلبة الرجال.",
+            "hi": "हे अल्लाह, मैं तेरी शरण मांगता हूं दुख और उदासी से, कमजोरी और आलस्य से, कंजूसी और डरपोकी से, कर्ज के बोझ और लोगों के वर्चस्व से।"
+          },
+          "reference": "Al-Bukhari: 2893, 5425, 6363, 6369"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "Everyday Duas",
+        "ar": "الأدعية اليومية",
+        "hi": "रोजाना की दुआएं"
+      },
+      "duas": [
+        {
+          "id": 33,
+          "title": {
+            "en": "Everyday Dua - 1",
+            "ar": "الدعاء اليومي - ١",
+            "hi": "रोजाना दुआ - १"
+          },
+          "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً",
+          "transliteration": {
+            "en": "Allaahumma 'innee 'as'aluka 'ilman naafi'an, wa rizqan tayyiban, wa 'amalan mutaqabbalan",
+            "ar": "اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً",
+            "hi": "अल्लाहुम्मा इन्नी असअलुका इल्मन नाफिआन, व रिज़क़न तय्यिबन, व अमलन मुतकब्बलन"
+          },
+          "translation": {
+            "en": "O Allah, I ask You for knowledge that is of benefit , a good provision , and deeds that will be accepted.",
+            "ar": "اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً.",
+            "hi": "हे अल्लाह, मैं तुझसे फायदेमंद ज्ञान, अच्छी रोज़ी और क़ुबूल होने वाले अमल की दुआ मांगता हूं।"
+          },
+          "reference": "Ibn Majah: 925"
+        }
+      ]
+    },
+    {
+      "category": {
+        "en": "For Forgiveness",
+        "ar": "للمغفرة",
+        "hi": "माफी के लिए"
+      },
+      "duas": [
+        {
+          "id": 38,
+          "title": {
+            "en": "Forgiveness for Household - 1",
+            "ar": "المغفرة للأسرة - ١",
+            "hi": "परिवार के लिए माफी - १"
+          },
+          "arabic": "رَّبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَلِمَن دَخَلَ بَيْتِيَ مُؤْمِنًا وَلِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ وَلَا تَزِدِ الظَّالِمِينَ إِلَّا تَبَارًا",
+          "transliteration": {
+            "en": "Rabbi ighfir lee waliwalidayyawaliman dakhala baytiya mu'minan walil mu'mineena wal mu'minati wala tazidi aththalimeena illatabaran",
+            "ar": "رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا وللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا",
+            "hi": "रब्बि इग़फिर ली वलीवालिदय्या वलिमन दख़ला बैतिया मु'मिनन वलिल मु'मिनीना वल मु'मिनाति वला तज़िदि ज़-ज़ालिमीना इल्ला तबारन"
+          },
+          "translation": {
+            "en": "My Lord, forgive me and my parents and whoever enters my house a believer and the believing men and believing women. And do not increase the wrongdoers except in destruction.",
+            "ar": "رب اغفر لي ولوالدي ولمن دخل بيتي مؤمنا وللمؤمنين والمؤمنات ولا تزد الظالمين إلا تبارا.",
+            "hi": "हे मेरे रब, मुझे और मेरे माता-पिता को माफ कर दे, और जो कोई मेरे घर में ईमान लेकर दाखिल हो और ईमान वाले मर्दों और औरतों को भी माफ कर दे, और ज़ालिमों को सिवाय तबाही के और कुछ न बढ़ा।"
+          },
+          "reference": "Surah Nooh - 71:28"
+        }
+      ]
+    }
+  ]
+}
