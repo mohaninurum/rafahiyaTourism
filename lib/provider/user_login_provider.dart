@@ -208,7 +208,7 @@ class UserLoginProvider with ChangeNotifier {
         final userDoc = await _firestore.collection('users').doc(user.uid).get();
 
         // User exists - complete login
-        await NotificationService.initialize(currentUserId: userCredential.user!.uid, collectionName: "users");
+        // await NotificationService.initialize(currentUserId: userCredential.user!.uid, collectionName: "users");
         // Wait for OneSignal to be ready and save player ID FIRST
         await savePlayerIdToFirestore(user.uid, 'users');
 
@@ -357,7 +357,7 @@ class UserLoginProvider with ChangeNotifier {
 
 
       // User exists - complete login
-      await NotificationService.initialize(currentUserId: userCredential.user!.uid, collectionName: "users");
+      // await NotificationService.initialize(currentUserId: userCredential.user!.uid, collectionName: "users");
 
       // Save player ID FIRST before navigation
       await savePlayerIdToFirestore(userCredential.user!.uid, 'users');
@@ -421,7 +421,7 @@ class UserLoginProvider with ChangeNotifier {
 
       _currentUser = updatedUser;
       await SplashServices.saveUserData(_currentUser!);
-      await NotificationService.initialize(currentUserId: _currentUser!.id!, collectionName: "users");
+      // await NotificationService.initialize(currentUserId: _currentUser!.id!, collectionName: "users");
       await savePlayerIdToFirestore(_currentUser!.id!, 'users');
       await SplashServices.saveLoginData(true);
 

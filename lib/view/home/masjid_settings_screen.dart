@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rafahiyatourism/const/color.dart';
+import 'package:rafahiyatourism/provider/app_state_proivder.dart';
 import 'package:rafahiyatourism/view/home/notification_setting_screen.dart';
 import '../../provider/home_masjid_data_provider.dart';
 import '../../provider/notification_provider.dart';
@@ -114,10 +115,23 @@ class _MasjidSettingsScreenState extends State<MasjidSettingsScreen> {
                     final homeDataProvider = Provider.of<HomeMasjidDataProvider>(context, listen: false);
                     homeDataProvider.fetchMosqueData(widget.tabIndex, mosqueUid);
 
+                    final appState = Provider.of<AppStateProvider>(context, listen: false);
+                    appState.setShowRestartDialog(true);
+                    print("Should show restart dialog!");
+
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Settings saved successfully')),
+                      const SnackBar(
+                        content: Text('Settings saved successfully'),
+                        duration: Duration(seconds: 2, milliseconds: 300),
+                      ),
                     );
-                    Navigator.of(context).pop();
+
+                    // Give time for snackbar + state propagation
+                    await Future.delayed(const Duration(milliseconds: 2500));
+                    if (mounted) {
+                      Navigator.pop(context);
+                      // Navigator.of(context).pop();
+                    }
                   },
                   child: Text('Save',
                       style: GoogleFonts.poppins(

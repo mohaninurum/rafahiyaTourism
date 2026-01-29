@@ -1,5 +1,5 @@
+import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:rafahiyatourism/provider/add_sub_super_admin_provider.dart';
 import 'package:rafahiyatourism/provider/add_umrah_packages_provider.dart';
 import 'package:rafahiyatourism/provider/ads_provider.dart';
+import 'package:rafahiyatourism/provider/app_state_proivder.dart';
 import 'package:rafahiyatourism/provider/home_masjid_data_provider.dart';
 import 'package:rafahiyatourism/provider/locale_provider.dart';
 import 'package:rafahiyatourism/provider/mosque_search_provider.dart';
@@ -16,14 +17,10 @@ import 'package:rafahiyatourism/provider/multi_mosque_provider.dart';
 import 'package:rafahiyatourism/provider/nearby_mosque_provider.dart';
 import 'package:rafahiyatourism/provider/notification_list_provider.dart';
 import 'package:rafahiyatourism/provider/notify_provider.dart';
-import 'package:rafahiyatourism/provider/one_signal_providers.dart';
 import 'package:rafahiyatourism/provider/request_update_time_subadmin_provider.dart';
 import 'package:rafahiyatourism/provider/user_announcement_provider.dart';
 import 'package:rafahiyatourism/provider/user_country_provider.dart';
-import 'package:rafahiyatourism/services/new_notification_service.dart';
-import 'package:rafahiyatourism/services/notification_scheduled.dart';
-import 'package:rafahiyatourism/services/notification_services.dart' as noti;
-import 'package:rafahiyatourism/utils/model/user_notifications.dart';
+import 'package:rafahiyatourism/utils/route_observer/route_observer.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/add_hadiya_maulana_provider.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/admin_login_provider.dart';
 import 'package:rafahiyatourism/provider/masjid_setting_provider.dart';
@@ -65,66 +62,425 @@ import 'package:rafahiyatourism/view/super_admin_code/superadminprovider/tutoria
 import 'package:rafahiyatourism/view/user_notification_screen.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'firebase_options.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  OneSignal.initialize("2a8636c3-a652-44ec-a07f-b489cd595551");
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
-  await OneSignal.Notifications.requestPermission(true);
-  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+void openNotificationListScreen() {
+  final nav = rootNavigatorKey.currentState;
+  if (nav == null) return;
 
+  final uid = FirebaseAuth.instance.currentUser?.uid;
+  if (uid == null || uid.isEmpty) return;
 
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  noti.NotificationService().initializeNotificationChannels();
-  FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
-  // Add a small delay to ensure subscription is established after permission
-  await Future.delayed(Duration(seconds: 15));
-
-  OneSignal.User.pushSubscription.addObserver((state) {
-    final playerId = state.current.id;
-    print("🔥 OneSignal PlayerID updated: $playerId");
-  });
-
-  runApp(const MyApp());
-
-
+  nav.push(
+    MaterialPageRoute(
+      builder: (context) => UserNotificationScreen(currentUserId: uid),
+    ),
+  );
 }
 
 
+Future<void> createNotificationChannels(
+  FlutterLocalNotificationsPlugin plugin,
+) async {
+  try {
+    const AndroidNotificationChannel fajrChannel = AndroidNotificationChannel(
+      'rafahiya_channel_fajr_V8', // Bumped to V8
+      'Fajr Azaan Notifications_V8',
+      description: 'Channel for Fajr prayer notifications_V8',
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+      sound: RawResourceAndroidNotificationSound('alert_sound1'),
+      audioAttributesUsage: AudioAttributesUsage.alarm,
+    );
 
+    const AndroidNotificationChannel otherNamazChannel =
+        AndroidNotificationChannel(
+          'rafahiya_channel_other_V8', // Bumped to V8
+          'Other Namaz Notifications_V8',
+          description: 'Channel for Duhur, Asr, Magrib, Isha notifications_V8',
+          importance: Importance.max,
+          playSound: true,
+          enableVibration: true,
+          sound: RawResourceAndroidNotificationSound('alert_sound'),
+          audioAttributesUsage: AudioAttributesUsage.alarm,
+        );
 
+    const AndroidNotificationChannel generalChannel =
+        AndroidNotificationChannel(
+          'rafahiya_channel_general_V8', // Bumped to V8
+          'General Notifications_V8',
+          description: 'Channel for general notifications_V8',
+          importance: Importance.max,
+          playSound: false,
+          enableVibration: true,
+          audioAttributesUsage: AudioAttributesUsage.notification,
+        );
+
+    final androidPlugin =
+        plugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
+
+    if (androidPlugin != null) {
+      await androidPlugin.createNotificationChannel(fajrChannel);
+      await androidPlugin.createNotificationChannel(otherNamazChannel);
+      await androidPlugin.createNotificationChannel(generalChannel);
+    }
+  } catch (e) {
+    debugPrint('❌ Error creating channels: $e');
+  }
+}
+
+class NotificationService {
+  NotificationService._();
+
+  static final NotificationService _instance = NotificationService._();
+
+  factory NotificationService() => _instance;
+
+  final _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final _messaging = FirebaseMessaging.instance;
+
+  Future<void> initializeNotificationChannels() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+          android: initializationSettingsAndroid,
+          iOS: DarwinInitializationSettings(),
+        );
+
+    await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await createNotificationChannels(_flutterLocalNotificationsPlugin);
+  }
+
+  static Future<void> initialize({
+    required String currentUserId,
+    required String collectionName,
+  }) async {
+    debugPrint(
+      "✅ NotificationService.initialize CALLED with userId=$currentUserId",
+    );
+
+    await _instance._requestPermission();
+
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    final DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+          android: initializationSettingsAndroid,
+          iOS: initializationSettingsDarwin,
+        );
+
+    await _instance._flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (details) {
+        openNotificationListScreen();
+      },
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint("🔥 FOREGROUND NOTIFICATION ARRIVED");
+      debugPrint(
+        "Title: ${message.notification?.title ?? message.data['title']}",
+      );
+      debugPrint("Body: ${message.notification?.body ?? message.data['body']}");
+      debugPrint(
+        "Channel: ${message.notification?.android?.channelId ?? message.data['android_channel_id']}",
+      );
+      debugPrint("Data: ${message.data}");
+      _instance._showLocalNotificationFromRemote(message);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      openNotificationListScreen();
+    });
+
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        openNotificationListScreen();
+      });
+    }
+
+    final token = await _instance._messaging.getToken();
+    if (token != null && currentUserId.isNotEmpty) {
+      await FirebaseFirestore.instance
+          .collection(collectionName)
+          .doc(currentUserId)
+          .set({'fcmToken': token}, SetOptions(merge: true));
+    }
+
+    _instance._messaging.onTokenRefresh.listen((newToken) async {
+      if (currentUserId.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection(collectionName)
+            .doc(currentUserId)
+            .set({'fcmToken': newToken}, SetOptions(merge: true));
+      }
+    });
+  }
+
+  Future<void> _requestPermission() async {
+    try {
+      NotificationSettings settings = await _messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+        provisional: false,
+      );
+      debugPrint('🔔 FCM Permission Status: ${settings.authorizationStatus}');
+
+      if (Platform.isAndroid) {
+        final androidInfo = await DeviceInfoPlugin().androidInfo;
+        if (androidInfo.version.sdkInt >= 33) {
+          final status = await Permission.notification.status;
+          if (status.isDenied) {
+            final result = await Permission.notification.request();
+            debugPrint(
+              result.isGranted
+                  ? '✅ Android 13+ permission granted.'
+                  : '🚫 Android 13+ permission denied.',
+            );
+          } else if (status.isPermanentlyDenied) {
+            await openAppSettings();
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('❌ Error requesting permission: $e');
+    }
+  }
+
+  Future<void> _showLocalNotificationFromRemote(RemoteMessage message) async {
+    String title =
+        message.notification?.title ??
+        message.data['title'] ??
+        message.data['headings']?['en'] ?? 'RafahiyaTourism';
+    String body =
+        message.notification?.body ??
+        message.data['body'] ??
+        message.data['contents']?['en'] ??
+        message.data['message'] ?? 'New notification';
+    final android = message.notification?.android;
+
+    String channelId = 'rafahiya_channel_general_V8';
+    String channelName = 'General Notifications_V8';
+    String channelDesc = 'Channel for general notifications_V8';
+    bool playSound = false;
+    bool enableVibration = true;
+    RawResourceAndroidNotificationSound? customSound;
+    bool fullScreenIntent = false;
+
+    String? effectiveChannelId =
+        android?.channelId ?? message.data['android_channel_id'] as String?;
+
+    if (effectiveChannelId?.contains('fajr') ?? false) {
+      channelId = 'rafahiya_channel_fajr_V8';
+      channelName = 'Fajr Azaan Notifications_V8';
+      channelDesc = 'Channel for Fajr prayer notifications_V8';
+      playSound = true;
+      customSound = const RawResourceAndroidNotificationSound('alert_sound1');
+      fullScreenIntent = true;
+    } else if (effectiveChannelId?.contains('other') ?? false) {
+      channelId = 'rafahiya_channel_other_V8';
+      channelName = 'Other Namaz Notifications_V8';
+      channelDesc = 'Channel for Duhur, Asr, Magrib, Isha notifications_V8';
+      playSound = true;
+      customSound = const RawResourceAndroidNotificationSound('alert_sound');
+      fullScreenIntent = true;
+    } else {
+      playSound = false;
+    }
+
+    final AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          channelId,
+          channelName,
+          channelDescription: channelDesc,
+          importance: Importance.max,
+          priority: Priority.high,
+          playSound: playSound,
+          enableVibration: enableVibration,
+          sound: customSound,
+          channelShowBadge: true,
+          visibility: NotificationVisibility.public,
+          showWhen: true,
+          fullScreenIntent: fullScreenIntent,
+          onlyAlertOnce: false,
+          category: AndroidNotificationCategory.alarm,
+        );
+
+    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
+    final platform = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
+
+    // Cancel all previous notifications first (optional but safe)
+    await _flutterLocalNotificationsPlugin.cancelAll();
+
+    await _flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platform,
+      payload: jsonEncode(message.data.toString()),
+    );
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
+  String title =
+      message.notification?.title ??
+      message.data['title'] ??
+      message.data['headings']?['en'] ?? 'RafahiyaTourism';
+  String body =
+      message.notification?.body ??
+      message.data['body'] ??
+      message.data['contents']?['en'] ??
+      message.data['message'] ?? 'New notification';
+
+  final android = message.notification?.android;
+
+  debugPrint("🔥 BACKGROUND / TERMINATED NOTIFICATION");
+  debugPrint("Title: $title");
+  debugPrint("Body: $body");
+  debugPrint("Data: ${message.data}");
+  debugPrint(
+    "Channel ID: ${android?.channelId ?? message.data['android_channel_id']}",
+  );
+
+  await Firebase.initializeApp();
+  final fln = FlutterLocalNotificationsPlugin();
+  const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+  const initSettings = InitializationSettings(android: androidInit);
+  await fln.initialize(initSettings);
+
+  await createNotificationChannels(fln);
+
+  String channelId = 'rafahiya_channel_general_V8';
+  String channelName = 'General Notifications_V8';
+  String channelDesc = 'Channel for general notifications_V8';
+  bool playSound = false;
+  bool enableVibration = true;
+  RawResourceAndroidNotificationSound? customSound;
+  bool fullScreenIntent = false;
+
+  String? effectiveChannelId =
+      android?.channelId ?? message.data['android_channel_id'] as String?;
+
+  if (effectiveChannelId?.contains('fajr') ?? false) {
+    channelId = 'rafahiya_channel_fajr_V8';
+    channelName = 'Fajr Azaan Notifications_V8';
+    channelDesc = 'Channel for Fajr prayer notifications_V8';
+    playSound = true;
+    customSound = const RawResourceAndroidNotificationSound('alert_sound1');
+    fullScreenIntent = true;
+  } else if (effectiveChannelId?.contains('other') ?? false) {
+    channelId = 'rafahiya_channel_other_V8';
+    channelName = 'Other Namaz Notifications_V8';
+    channelDesc = 'Channel for Duhur, Asr, Magrib, Isha notifications_V8';
+    playSound = true;
+    customSound = const RawResourceAndroidNotificationSound('alert_sound');
+    fullScreenIntent = true;
+  } else {
+    playSound = false;
+  }
+
+  final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    channelId,
+    channelName,
+    channelDescription: channelDesc,
+    importance: Importance.max,
+    priority: Priority.high,
+    playSound: playSound,
+    enableVibration: enableVibration,
+    sound: customSound,
+    channelShowBadge: true,
+    visibility: NotificationVisibility.public,
+    showWhen: true,
+    fullScreenIntent: fullScreenIntent,
+    category: AndroidNotificationCategory.alarm,
+    onlyAlertOnce: false,
+  );
+
+  final platform = NotificationDetails(android: androidDetails);
+
+  // Cancel all previous notifications
+  await fln.cancelAll();
+
+  await fln.show(0, title, body, platform, payload: jsonEncode(message.data.toString()));
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
+
+  // === Re-add minimal OneSignal ===
+  OneSignal.initialize("2a8636c3-a652-44ec-a07f-b489cd595551"); // your app ID
+  OneSignal.Notifications.requestPermission(true); // ask permission
+  // Do NOT add any observers or extra config — keep it minimal
+
+  // OneSignal.Notifications.addClickListener((event) {
+  //   openNotificationListScreen();
+  // });
+
+  await NotificationService().initializeNotificationChannels();
+
+  final currentUser = FirebaseAuth.instance.currentUser;
+  await NotificationService.initialize(
+    currentUserId: currentUser?.uid ?? '',
+    collectionName: 'users',
+  );
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  static BuildContext? navigatorContext; // globally accessible context
+  static BuildContext? navigatorContext;
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
-  static BuildContext? navigatorContext;
-
   @override
   Widget build(BuildContext context) {
-    // Save context globally for navigation
     MyApp.navigatorContext = context;
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child){
+      builder: (context, child) {
         return MultiProvider(
           providers: [
-            // Core providers
             ChangeNotifierProvider(create: (_) => SplashScreenProvider()),
             ChangeNotifierProvider(create: (_) => LocaleProvider()),
             ChangeNotifierProvider(create: (_) => UserProvider()),
-
-            // Authentication providers
             ChangeNotifierProvider(create: (_) => SignupProvider()),
             ChangeNotifierProvider(create: (_) => AdminsLoginProvider()),
             ChangeNotifierProvider(create: (_) => AdminRegisterProvider()),
@@ -132,69 +488,62 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_) => UserLoginProvider()),
             ChangeNotifierProvider(create: (_) => UserProfileProvider()),
             ChangeNotifierProvider(create: (_) => SubAdminLoginProvider()),
-            ChangeNotifierProvider(create: (_) => SubAdminForgotPasswordProvider()),
+            ChangeNotifierProvider(
+              create: (_) => SubAdminForgotPasswordProvider(),
+            ),
             ChangeNotifierProvider(create: (_) => NotificationProvider()),
-
-            // Mosque and location providers
             ChangeNotifierProvider(create: (context) => MultiMosqueProvider()),
-            ChangeNotifierProvider(create: (context) => HomeMasjidDataProvider()),
+            ChangeNotifierProvider(
+              create: (context) => HomeMasjidDataProvider(),
+            ),
             ChangeNotifierProvider(create: (_) => MasjidSettingsProvider()),
             ChangeNotifierProvider(create: (_) => NearbyMosqueProvider()),
             ChangeNotifierProvider(create: (_) => MosqueSearchProvider()),
             ChangeNotifierProvider(create: (_) => MapSearchProvider()),
             ChangeNotifierProvider(create: (_) => LocationSearchProvider()),
-
-            // Hijri Date Provider (Important for your feature)
             ChangeNotifierProvider(create: (_) => HijriDateProvider()),
-
-            // User country provider (needed for Hijri date)
             ChangeNotifierProvider(create: (_) => UserCountryProvider()),
-
-            // Super Admin providers
             ChangeNotifierProvider(create: (_) => AddSubSuperAdminProvider()),
-            ChangeNotifierProvider(create: (_) => PendingAdminImamListProvider()),
+            ChangeNotifierProvider(
+              create: (_) => PendingAdminImamListProvider(),
+            ),
             ChangeNotifierProvider(create: (_) => SubAdminDetailProvider()),
             ChangeNotifierProvider(create: (_) => SubAdminProfileProvider()),
             ChangeNotifierProvider(create: (_) => SubAdminTimingsProvider()),
-
-            // Content management providers
             ChangeNotifierProvider(create: (_) => SliderImagesProvider()),
             ChangeNotifierProvider(create: (_) => TutorialVideoProvider()),
             ChangeNotifierProvider(create: (_) => BayanProvider()),
-            ChangeNotifierProvider(create: (_) => GeneralAnnouncementProvider()),
+            ChangeNotifierProvider(
+              create: (_) => GeneralAnnouncementProvider(),
+            ),
             ChangeNotifierProvider(create: (_) => MarqueeProvider()),
             ChangeNotifierProvider(create: (_) => LiveStreamProvider(context)),
             ChangeNotifierProvider(create: (_) => AdsProvider()),
-
-            // Prayer and timing providers
             ChangeNotifierProvider(create: (_) => PrayerTimesProvider()),
             ChangeNotifierProvider(create: (_) => SSunsetTimingProvider()),
             ChangeNotifierProvider(create: (_) => SuperAdminSalahProvider()),
-
-            // Utility providers
-            ChangeNotifierProvider(create: (_) => NotificationSettingsProvider()),
+            ChangeNotifierProvider(
+              create: (_) => NotificationSettingsProvider(),
+            ),
             ChangeNotifierProvider(create: (_) => TasbihProvider()),
             ChangeNotifierProvider(create: (_) => ZakatProvider()),
             ChangeNotifierProvider(create: (_) => WalletDocumentProvider()),
             ChangeNotifierProvider(create: (_) => AddUmrahPackageProvider()),
-
-            // Community and service providers
             ChangeNotifierProvider(create: (_) => CommunityServiceProvider()),
             ChangeNotifierProvider(create: (_) => HadiyaProvider()),
             ChangeNotifierProvider(create: (_) => PendingHadiyaProvider()),
-
-            // App settings providers
             ChangeNotifierProvider(create: (_) => AppSettingsProvider()),
             ChangeNotifierProvider(create: (_) => FAQProvider()),
-
-            // Announcement providers
             ChangeNotifierProvider(create: (_) => UserAnnouncementProvider()),
-            ChangeNotifierProvider(create: (_) => OneSignalNotificationProviders()),
-            ChangeNotifierProvider(create: (_) => RequestUpdateTimeSubAdminProvider()),
+            ChangeNotifierProvider(
+              create: (_) => RequestUpdateTimeSubAdminProvider(),
+            ),
             ChangeNotifierProvider(create: (_) => NotificationListProvider()),
-
+            ChangeNotifierProvider(create: (_) => AppStateProvider()),
           ],
           child: MaterialApp(
+            navigatorKey: rootNavigatorKey,
+            navigatorObservers: [routeObserver],
             debugShowCheckedModeBanner: false,
             title: 'Rafahiya Tourism',
             theme: ThemeData(
@@ -208,8 +557,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
 
 class AppInitializer extends StatefulWidget {
   const AppInitializer({super.key});
@@ -228,20 +575,13 @@ class _AppInitializerState extends State<AppInitializer> {
   }
 
   Future<void> _initializeApp() async {
-
-    setState(() {
-      _isInitialized = true;
-    });
+    setState(() => _isInitialized = true);
   }
 
   @override
   Widget build(BuildContext context) {
     if (!_isInitialized) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return FutureBuilder(
@@ -249,19 +589,19 @@ class _AppInitializerState extends State<AppInitializer> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
-
         return const SplashScreen();
       },
     );
   }
 
   Future<void> _initializeProviders(BuildContext context) async {
-    final hijriDateProvider = Provider.of<HijriDateProvider>(context, listen: false);
+    final hijriDateProvider = Provider.of<HijriDateProvider>(
+      context,
+      listen: false,
+    );
     await hijriDateProvider.loadAllCountryDateSettings();
     await hijriDateProvider.loadCountriesFromSubAdmins();
   }

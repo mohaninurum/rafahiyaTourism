@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 
 import '../view/model/notification_model.dart';
 class NotificationListProvider extends ChangeNotifier {
-  bool isLoading=true;
+  bool isLoading=false;
   NotificationResponse? notificationResponse;
 
 void fetchNotificationsApi({
     required String userId,
   }) async {
-    isLoading= false;
+    isLoading= true;
     notifyListeners();
     try {
       final uri =
@@ -21,14 +21,11 @@ void fetchNotificationsApi({
       if (response.statusCode == 200) {
         final decodedJson = jsonDecode(response.body);
         notificationResponse=  NotificationResponse.fromJson(decodedJson);
-        isLoading= true;
+        isLoading= false;
         notifyListeners();
       }
-
-
-
     } catch (e) {
-      isLoading= true;
+      isLoading= false;
       print('Fetch Notification Error: $e');
       notifyListeners();
     }

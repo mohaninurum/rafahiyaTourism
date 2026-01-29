@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rafahiyatourism/const/error_handler.dart';
-
-import '../../../../services/notification_scheduled.dart';
 import '../models/eid_timings_model.dart';
 import '../models/prohibited_time_model.dart';
 import '../models/salah_timing_model.dart';
