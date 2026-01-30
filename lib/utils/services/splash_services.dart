@@ -25,6 +25,7 @@ class SplashServices {
     if (isLoggedIn) {
       print("isLoggedIn..........->>");
        await FirebaseMessaging.instance.subscribeToTopic("notificationAll");
+       // await FirebaseMessaging.instance.subscribeToTopic("testNotification");
       await userProvider.loadUserData();
     }
 

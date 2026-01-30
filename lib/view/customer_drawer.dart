@@ -6,9 +6,10 @@ import 'package:rafahiyatourism/utils/language/app_strings.dart';
 import 'package:rafahiyatourism/view/auth/edit_profile.dart';
 import 'package:rafahiyatourism/view/more_items/setting_screen.dart';
 import 'package:rafahiyatourism/view/super_admin_code/superadminprovider/app_setting_provider.dart';
+import 'package:rafahiyatourism/view/user_notification_screen.dart';
 import 'package:rafahiyatourism/view/user_side_contact_page.dart';
 import 'package:rafahiyatourism/view/user_terms_condition_screen.dart';
-
+import 'package:share_plus/share_plus.dart';
 import '../const/color.dart';
 import '../const/shimmer_loading_text.dart';
 import '../provider/locale_provider.dart';
@@ -250,7 +251,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             color: Colors.white,
                             size: isSmallScreen ? 17 : 25,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserNotificationScreen(),
+                              ),
+                            );
+                          },
                         ),
                         ListTile(
                           title: Text(
@@ -310,7 +318,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             color: Colors.white,
                             size: isSmallScreen ? 17 : 25,
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            SharePlus.instance.share(
+                                ShareParams(text: 'https://play.google.com/store/apps/details?id=com.meuzzein.rafahiyatourism&pcampaignid=web_share')
+                            );
+                          },
                         ),
                       ],
                     ),

@@ -18,6 +18,7 @@ import 'package:rafahiyatourism/provider/nearby_mosque_provider.dart';
 import 'package:rafahiyatourism/provider/notification_list_provider.dart';
 import 'package:rafahiyatourism/provider/notify_provider.dart';
 import 'package:rafahiyatourism/provider/request_update_time_subadmin_provider.dart';
+import 'package:rafahiyatourism/provider/setting_provider.dart';
 import 'package:rafahiyatourism/provider/user_announcement_provider.dart';
 import 'package:rafahiyatourism/provider/user_country_provider.dart';
 import 'package:rafahiyatourism/utils/route_observer/route_observer.dart';
@@ -540,6 +541,8 @@ class _MyAppState extends State<MyApp> {
             ),
             ChangeNotifierProvider(create: (_) => NotificationListProvider()),
             ChangeNotifierProvider(create: (_) => AppStateProvider()),
+            ChangeNotifierProvider(create: (_) => SettingProvider()),
+
           ],
           child: MaterialApp(
             navigatorKey: rootNavigatorKey,
