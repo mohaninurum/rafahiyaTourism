@@ -8,9 +8,9 @@ import 'model/notification_model.dart';
 
 
 class UserNotificationScreen extends StatefulWidget {
-  final String currentUserId;
 
-  UserNotificationScreen({required this.currentUserId, Key? key}) : super(key: key);
+
+  UserNotificationScreen({ Key? key}) : super(key: key);
 
   @override
   State<UserNotificationScreen> createState() => _UserNotificationScreenState();
@@ -22,16 +22,29 @@ class _UserNotificationScreenState extends State<UserNotificationScreen> {
 
   @override
   void initState() {
-    Provider.of<NotificationListProvider>(context, listen: false).fetchNotificationsApi(userId: widget.currentUserId);
+    Provider.of<NotificationListProvider>(context, listen: false).fetchNotificationsApi();
     super.initState();
   }
 
+  getUserID(){
+    // FirebaseAuth.instance.currentUser!.uid,
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("notifications")),
-      body: Consumer<NotificationListProvider>(builder: (context, value, child) {    return value.isLoading? value.notificationResponse?.data.isEmpty==true ?Center(child: Text('No notifications yet.')): ListView.builder(
+      appBar: AppBar(title: Text("notifications"),actions: [
+        // Padding(
+        //   padding: const EdgeInsets.all(10.0),
+        //   child: ElevatedButton(onPressed: () {
+        //     showDeleteNotificationConfirmDialog(context);
+        //   }, child: Text("All Clear")),
+        // )
+      ],),
+      body: Consumer<NotificationListProvider>(builder: (context, value, child) {
+        return value.isLoading
+            ? value.notificationResponse?.data.isEmpty==true ?Center(child: Text('No notifications yet.'))
+            : ListView.builder(
         itemCount: value.notificationResponse?.data.length,
         itemBuilder: (context, i) {
           final n = value.notificationResponse?.data[i];
@@ -79,4 +92,47 @@ class _UserNotificationScreenState extends State<UserNotificationScreen> {
       // ),
     );
   }
+
+  void showDeleteNotificationConfirmDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text(
+            'Delete Notification',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            'Are you sure you want to delete this notification? '
+                'This action cannot be undone.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // cancel
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // cancel
+                // Provider.of<NotificationListProvider>(context, listen: false).deleteAllNotification();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
 }

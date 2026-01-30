@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rafahiyatourism/const/color.dart';
 import 'package:rafahiyatourism/provider/locale_provider.dart';
 
+import '../../provider/setting_provider.dart';
 import '../../utils/language/app_strings.dart';
 import '../../utils/services/splash_services.dart';
 import '../auth/intro_slider.dart';
@@ -31,6 +32,7 @@ class _SettingScreenState extends State<SettingScreen>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -43,6 +45,7 @@ class _SettingScreenState extends State<SettingScreen>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward();
+    fetchSetting();
   }
 
   @override
@@ -56,9 +59,15 @@ class _SettingScreenState extends State<SettingScreen>
     localeProvider.setLocale(languageCode);
   }
 
+  void fetchSetting(){
+    Provider.of<SettingProvider>(context,listen: false).fetchSetting();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<LocaleProvider>(context);
+    final settingProvider = Provider.of<SettingProvider>(context);
     final currentLocale = localeProvider.locale?.languageCode ?? 'en';
 
     return Scaffold(
@@ -143,101 +152,119 @@ class _SettingScreenState extends State<SettingScreen>
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 180,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: AppColors.whiteBackground,
-                  borderRadius: BorderRadius.circular(6),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SwitchListTile(
-                      activeColor: AppColors.mainColor,
-                      title: SlideTransition(
-                        position: _mosqueOffsetAnimation,
-                        child: Text(
-                          AppStrings.getString('salahUpdate', currentLocale),
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.blackBackground,
+              Consumer<SettingProvider>(builder: (context, value, child) {
+                return    Container(
+                  height: 180,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteBackground,
+                    borderRadius: BorderRadius.circular(6),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SwitchListTile(
+                        activeColor: AppColors.mainColor,
+                        title: SlideTransition(
+                          position: _mosqueOffsetAnimation,
+                          child: Text(
+                            AppStrings.getString('salahUpdate', currentLocale),
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.blackBackground,
+                            ),
                           ),
                         ),
-                      ),
-                      value: salah,
-                      onChanged: (bool value) {
-                        setState(() {
-                          salah = value;
-                        });
-                      },
-                      secondary: const Icon(
-                        Icons.mosque_outlined,
-                        color: AppColors.mainColor,
-                      ),
-                    ),
-                    SwitchListTile(
-                      activeColor: AppColors.mainColor,
-                      title: SlideTransition(
-                        position: _mosqueOffsetAnimation,
-                        child: Text(
-                          AppStrings.getString('bayanAlerts', currentLocale),
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.blackBackground,
-                          ),
+                        value: value.sahahUpdate,
+                        onChanged: (bool value) {
+                          setState(() {
+                            salah = value;
+                          });
+                          settingProvider.updateNotificationSetting(
+                            key: 'sahahUpdate',
+                            value: value,
+                          );
+
+                        },
+                        secondary: const Icon(
+                          Icons.mosque_outlined,
+                          color: AppColors.mainColor,
                         ),
                       ),
-                      value: bayan,
-                      onChanged: (bool value) {
-                        setState(() {
-                          bayan = value;
-                        });
-                      },
-                      secondary: const Icon(
-                        Icons.record_voice_over_outlined,
-                        color: AppColors.mainColor,
-                      ),
-                    ),
-                    SwitchListTile(
-                      activeColor: AppColors.mainColor,
-                      title: SlideTransition(
-                        position: _mosqueOffsetAnimation,
-                        child: Text(
-                          AppStrings.getString('clockChangeNotification', currentLocale),
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.blackBackground,
+                      SwitchListTile(
+                        activeColor: AppColors.mainColor,
+                        title: SlideTransition(
+                          position: _mosqueOffsetAnimation,
+                          child: Text(
+                            AppStrings.getString('bayanAlerts', currentLocale),
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.blackBackground,
+                            ),
                           ),
                         ),
+                        value: value.banyanAlerts,
+                        onChanged: (bool value) {
+                          setState(() {
+                            bayan = value;
+                          });
+                          settingProvider.updateNotificationSetting(
+                            key: 'banyanAlerts',
+                            value: value,
+                          );
+
+                        },
+                        secondary: const Icon(
+                          Icons.record_voice_over_outlined,
+                          color: AppColors.mainColor,
+                        ),
                       ),
-                      value: clockNotification,
-                      onChanged: (bool value) {
-                        setState(() {
-                          clockNotification = value;
-                        });
-                      },
-                      secondary: const Icon(
-                        Icons.notifications_on,
-                        color: AppColors.mainColor,
+                      SwitchListTile(
+                        activeColor: AppColors.mainColor,
+                        title: SlideTransition(
+                          position: _mosqueOffsetAnimation,
+                          child: Text(
+                            AppStrings.getString('clockChangeNotification', currentLocale),
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.blackBackground,
+                            ),
+                          ),
+                        ),
+                        value: value.clockChangeNotification,
+                        onChanged: (bool value) {
+                          setState(() {
+                            clockNotification = value;
+                          });
+                          settingProvider.updateNotificationSetting(
+                            key: 'clock_change_notification',
+                            value: value,
+                          );
+
+                        },
+                        secondary: const Icon(
+                          Icons.notifications_on,
+                          color: AppColors.mainColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              },),
+
               const SizedBox(height: 30),
               SlideTransition(
                 position: _mosqueOffsetAnimation,

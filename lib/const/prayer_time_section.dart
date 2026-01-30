@@ -647,11 +647,13 @@ class _PrayerTimesSectionState extends State<PrayerTimesSection> {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                                  child: Text(
-                                    prayerName,
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: isCurrent ? FontWeight.bold : FontWeight.bold,
-                                      color: isCurrent ? Colors.white : Colors.black,
+                                  child: FittedBox(
+                                    child: Text(
+                                      prayerName,
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: isCurrent ? FontWeight.bold : FontWeight.bold,
+                                        color: isCurrent ? Colors.white : Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -7,9 +7,7 @@ class NotificationListProvider extends ChangeNotifier {
   bool isLoading=true;
   NotificationResponse? notificationResponse;
 
-void fetchNotificationsApi({
-    required String userId,
-  }) async {
+void fetchNotificationsApi() async {
     isLoading= false;
     notifyListeners();
     try {
@@ -33,5 +31,32 @@ void fetchNotificationsApi({
       notifyListeners();
     }
   }
+
+
+  Future<void> deleteAllNotification() async {
+    isLoading= false;
+    notifyListeners();
+    try {
+      // final uri =
+      // Uri.parse('https://us-central1-rafahiya-tourism.cloudfunctions.net/getNotifications');
+      //
+      // final response = await http.get(uri);
+      //
+      // if (response.statusCode == 200) {
+      //   final decodedJson = jsonDecode(response.body);
+      //   notificationResponse=  NotificationResponse.fromJson(decodedJson);
+      //   isLoading= true;
+      //   notifyListeners();
+      // }
+
+
+
+    } catch (e) {
+      isLoading= true;
+      print('Fetch Notification Error: $e');
+      notifyListeners();
+    }
+  }
+
 
 }

@@ -18,6 +18,7 @@ import 'package:rafahiyatourism/provider/notification_list_provider.dart';
 import 'package:rafahiyatourism/provider/notify_provider.dart';
 import 'package:rafahiyatourism/provider/one_signal_providers.dart';
 import 'package:rafahiyatourism/provider/request_update_time_subadmin_provider.dart';
+import 'package:rafahiyatourism/provider/setting_provider.dart';
 import 'package:rafahiyatourism/provider/user_announcement_provider.dart';
 import 'package:rafahiyatourism/provider/user_country_provider.dart';
 import 'package:rafahiyatourism/services/new_notification_service.dart';
@@ -192,6 +193,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_) => OneSignalNotificationProviders()),
             ChangeNotifierProvider(create: (_) => RequestUpdateTimeSubAdminProvider()),
             ChangeNotifierProvider(create: (_) => NotificationListProvider()),
+            ChangeNotifierProvider(create: (_) => SettingProvider()),
 
           ],
           child: MaterialApp(
