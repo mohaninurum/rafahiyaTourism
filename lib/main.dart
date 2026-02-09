@@ -230,7 +230,6 @@ class _AppInitializerState extends State<AppInitializer> {
   }
 
   Future<void> _initializeApp() async {
-
     setState(() {
       _isInitialized = true;
     });
