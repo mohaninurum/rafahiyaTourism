@@ -12,6 +12,7 @@ import 'package:rafahiyatourism/view/super_admin_code/super_admin_navbar.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/admin_login_provider.dart';
 
 import '../../provider/user_login_provider.dart';
+import 'get_time_zone.dart';
 
 class SplashServices {
   Future<bool> checkLogin(BuildContext context) async {
@@ -24,7 +25,9 @@ class SplashServices {
 
     if (isLoggedIn) {
       print("isLoggedIn..........->>");
-       await FirebaseMessaging.instance.subscribeToTopic("notificationAll");
+      String currentTimeZone = await GetTimeZone.setupTimezone();
+      String topic = currentTimeZone.replaceAll('/', '_');
+       await FirebaseMessaging.instance.subscribeToTopic(topic);
        // await FirebaseMessaging.instance.subscribeToTopic("testNotification");
       await userProvider.loadUserData();
     }

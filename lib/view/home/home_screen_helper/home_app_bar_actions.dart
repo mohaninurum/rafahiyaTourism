@@ -57,7 +57,7 @@ class AppBarActions extends StatelessWidget {
             size: screenWidth * 0.065,
           ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> UserNotificationScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> UserNotificationScreen(currentUserId: '',)));
           },
         ),
         IconButton(

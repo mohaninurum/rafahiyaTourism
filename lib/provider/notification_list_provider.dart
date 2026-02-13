@@ -7,9 +7,7 @@ class NotificationListProvider extends ChangeNotifier {
   bool isLoading=false;
   NotificationResponse? notificationResponse;
 
-void fetchNotificationsApi({
-    required String userId,
-  }) async {
+void fetchNotificationsApi() async {
     isLoading= true;
     notifyListeners();
     try {

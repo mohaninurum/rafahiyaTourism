@@ -10,7 +10,7 @@ import 'model/notification_model.dart';
 class UserNotificationScreen extends StatefulWidget {
 
 
-  UserNotificationScreen({ Key? key}) : super(key: key);
+  UserNotificationScreen({ Key? key, required String currentUserId}) : super(key: key);
 
   @override
   State<UserNotificationScreen> createState() => _UserNotificationScreenState();
