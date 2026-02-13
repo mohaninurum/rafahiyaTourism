@@ -11,6 +11,7 @@ class AuthUserModel {
   final DateTime? createdAt;
   final String country;
   String? playerId;
+  String? timeZone;
 
   AuthUserModel({
     this.id,
@@ -23,6 +24,7 @@ class AuthUserModel {
     this.profileImage,
     this.playerId,
     this.createdAt,
+    this.timeZone,
   });
 
   Map<String, dynamic> toJson() {
@@ -37,6 +39,7 @@ class AuthUserModel {
       'profileImage': profileImage,
       'playerId': playerId,
       'createdAt': createdAt?.toIso8601String(),
+      'timeZone': createdAt?.toIso8601String(),
     };
   }
 
@@ -54,6 +57,7 @@ class AuthUserModel {
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : null,
+      timeZone: json['timeZone'],
     );
   }
 
@@ -69,6 +73,7 @@ class AuthUserModel {
       'profileImage': profileImage ?? '',
       'playerId': playerId,
       'createdAt': createdAt ?? FieldValue.serverTimestamp(),
+      'timeZone': timeZone,
     };
   }
 
@@ -84,6 +89,7 @@ class AuthUserModel {
       profileImage: map['profileImage'],
       playerId: map['playerId'],
       createdAt: (map['createdAt'] as Timestamp?)?.toDate(),
+      timeZone: map['timeZone'],
     );
   }
 
@@ -97,6 +103,7 @@ class AuthUserModel {
     String? profileImage,
     DateTime? createdAt,
     String? country,
+    String? timeZone,
   }) {
     return AuthUserModel(
       id: id ?? this.id,
@@ -109,6 +116,7 @@ class AuthUserModel {
       profileImage: profileImage ?? this.profileImage,
       playerId: playerId ?? this.playerId,
       createdAt: createdAt ?? this.createdAt,
+      timeZone: timeZone ?? this.timeZone,
     );
   }
 

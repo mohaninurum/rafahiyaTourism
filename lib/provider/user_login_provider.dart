@@ -11,6 +11,8 @@ import '../utils/language/app_strings.dart';
 import '../utils/model/auth/auth_user_model.dart';
 import '../view/auth/google_sigin_detailScreen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class UserLoginProvider with ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -47,6 +49,12 @@ class UserLoginProvider with ChangeNotifier {
   Future<void> loadUserData() async {
     _currentUser = await SplashServices.getUserData();
     notifyListeners();
+  }
+
+
+  Future<Map<String, tz.Location>> setupTimezone() async {
+    var locations = tz.timeZoneDatabase.locations;
+    return locations;
   }
 
 

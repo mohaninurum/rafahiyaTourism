@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:rafahiyatourism/provider/locale_provider.dart';
 import '../const/color.dart';
 import '../utils/language/app_strings.dart';
 import '../utils/model/auth/auth_user_model.dart';
+import '../utils/services/get_time_zone.dart';
 
 class SignupProvider with ChangeNotifier {
   final TextEditingController fullNameController = TextEditingController();
@@ -450,6 +452,10 @@ class SignupProvider with ChangeNotifier {
         imageUrl = await _uploadImageToStorage(_profileImage!, userCredential.user!.uid, context);
       }
 
+      String currentTimeZone = await GetTimeZone.setupTimezone();
+      String topic = currentTimeZone.replaceAll('/', '_');
+      await FirebaseMessaging.instance.subscribeToTopic(topic);
+
       final user = AuthUserModel(
         id: userCredential.user?.uid,
         fullName: fullNameController.text.trim(),
@@ -459,6 +465,7 @@ class SignupProvider with ChangeNotifier {
         country: _selectedCountry ?? '', // Use selected country
         email: emailController.text.trim(),
         profileImage: imageUrl ?? '',
+        timeZone: currentTimeZone
       );
 
       await _saveUserToFirestore(user);

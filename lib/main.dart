@@ -25,6 +25,7 @@ import 'package:rafahiyatourism/services/new_notification_service.dart';
 import 'package:rafahiyatourism/services/notification_scheduled.dart';
 import 'package:rafahiyatourism/services/notification_services.dart' as noti;
 import 'package:rafahiyatourism/utils/model/user_notifications.dart';
+import 'package:rafahiyatourism/utils/services/get_time_zone.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/add_hadiya_maulana_provider.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/admin_login_provider.dart';
 import 'package:rafahiyatourism/provider/masjid_setting_provider.dart';
@@ -66,9 +67,16 @@ import 'package:rafahiyatourism/view/super_admin_code/superadminprovider/tutoria
 import 'package:rafahiyatourism/view/user_notification_screen.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'firebase_options.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  tz.initializeTimeZones();
+  print("timeZone");
+  GetTimeZone.setupTimezone();
+
   OneSignal.initialize("2a8636c3-a652-44ec-a07f-b489cd595551");
 
   await OneSignal.Notifications.requestPermission(true);
