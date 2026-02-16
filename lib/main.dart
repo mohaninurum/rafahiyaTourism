@@ -22,6 +22,7 @@ import 'package:rafahiyatourism/provider/setting_provider.dart';
 import 'package:rafahiyatourism/provider/user_announcement_provider.dart';
 import 'package:rafahiyatourism/provider/user_country_provider.dart';
 import 'package:rafahiyatourism/utils/route_observer/route_observer.dart';
+import 'package:rafahiyatourism/utils/services/get_time_zone.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/add_hadiya_maulana_provider.dart';
 import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/admin_login_provider.dart';
 import 'package:rafahiyatourism/provider/masjid_setting_provider.dart';
@@ -434,6 +435,8 @@ Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GetTimeZone.setupTimezone();
+  timezone.initializeTimeZones();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
