@@ -67,7 +67,7 @@ android {
 //                storeFile = file(storePath)
 //            }
 //        }
-        release {
+        /*release {
             keyAlias keystoreProperties["keyAlias"]
             keyPassword keystoreProperties["keyPassword"]
             storePassword keystoreProperties["storePassword"]
@@ -76,7 +76,7 @@ android {
             if (storePath != null) {
                 storeFile file(storePath)
             }
-        }
+        }*/
     }
 
     buildTypes {
@@ -87,7 +87,7 @@ android {
 //        }
 
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
             minifyEnabled true
             shrinkResources true
         }

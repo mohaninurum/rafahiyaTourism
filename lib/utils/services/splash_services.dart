@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rafahiyatourism/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rafahiyatourism/utils/model/auth/auth_user_model.dart';
 import 'package:rafahiyatourism/view/auth/intro_slider.dart';
@@ -25,9 +26,10 @@ class SplashServices {
 
     if (isLoggedIn) {
       print("isLoggedIn..........->>");
-      String currentTimeZone = await GetTimeZone.setupTimezone();
-      String topic = currentTimeZone.replaceAll('/', '_');
-       await FirebaseMessaging.instance.subscribeToTopic(topic);
+      //String currentTimeZone = await GetTimeZone.setupTimezone();
+      await NotificationService.subscribeToTimezoneTopicSmart();
+      //String topic = currentTimeZone.replaceAll('/', '_');
+       //await FirebaseMessaging.instance.subscribeToTopic(topic);
        // await FirebaseMessaging.instance.subscribeToTopic("testNotification");
       await userProvider.loadUserData();
     }

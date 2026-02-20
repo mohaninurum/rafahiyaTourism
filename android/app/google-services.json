@@ -75,6 +75,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "167145494685-0sp7mbg39d445qvmg52ja8gb2o79bjo0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meuzzein.rafahiyatourism",
+            "certificate_hash": "71c1c3b519db0aae21cdf242df77c7423a8c9698"
+          }
+        },
+        {
           "client_id": "167145494685-11aokii13cfa2glgsbl2qg1vnbe5jac4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -104,6 +112,14 @@
           "android_info": {
             "package_name": "com.meuzzein.rafahiyatourism",
             "certificate_hash": "0b9708115f2d118c002f9aa31c591fa17ad7bb01"
+          }
+        },
+        {
+          "client_id": "167145494685-rde44mod12o4do473k103u67qgbbpb1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meuzzein.rafahiyatourism",
+            "certificate_hash": "85f27abd25f14c75b98be2dba4f0130278ae86b2"
           }
         },
         {

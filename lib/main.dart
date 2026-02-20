@@ -62,6 +62,7 @@ import 'package:rafahiyatourism/view/super_admin_code/superadminprovider/super_a
 import 'package:rafahiyatourism/view/super_admin_code/superadminprovider/super_admin_salah_provider/super_admin_salah_provider.dart';
 import 'package:rafahiyatourism/view/super_admin_code/superadminprovider/tutorial_videos_provider/tutorial_videos_provider.dart';
 import 'package:rafahiyatourism/view/user_notification_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as timezone;
 import 'firebase_options.dart';
 import 'dart:io';
@@ -199,6 +200,7 @@ class NotificationService {
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("FG RAW : ${message.toMap()}");
       debugPrint("🔥 FOREGROUND NOTIFICATION ARRIVED");
       debugPrint(
         "Title: ${message.notification?.title ?? message.data['title']}",
@@ -230,14 +232,62 @@ class NotificationService {
           .set({'fcmToken': token}, SetOptions(merge: true));
     }
 
+    // 🔥 Subscribe to topic AFTER token is available
+    try {
+      await subscribeToTimezoneTopicSmart();
+      debugPrint("✅ SUBSCRIBED TO TOPIC: Asia_Kolkata");
+    } catch (e) {
+      debugPrint("❌ TOPIC SUBSCRIPTION FAILED: $e");
+    }
+
     _instance._messaging.onTokenRefresh.listen((newToken) async {
       if (currentUserId.isNotEmpty) {
         await FirebaseFirestore.instance
             .collection(collectionName)
             .doc(currentUserId)
-            .set({'fcmToken': newToken}, SetOptions(merge: true));
+            .set({'fcmToken': newToken}, SetOptions(merge: true)
+        );
+
+        await subscribeToTimezoneTopicSmart();
       }
     });
+  }
+
+  static String _normalizeTopic(String topic) {
+    // Map old timezone names to new ones
+    const Map<String, String> timezoneAliases = {
+      'Asia_Calcutta': 'Asia_Kolkata',
+      'Asia_Saigon': 'Asia_Ho_Chi_Minh',
+      'Asia_Katmandu': 'Asia_Kathmandu',
+      'America_Indianapolis': 'America_Indiana_Indianapolis',
+      // Add more as needed
+    };
+    return timezoneAliases[topic] ?? topic;
+  }
+
+  static Future<void> subscribeToTimezoneTopicSmart() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String timeZone = await GetTimeZone.setupTimezone();
+
+      // ✅ Normalize BEFORE subscribing
+      final String rawTopic = timeZone.replaceAll('/', '_');
+      final String newTopic = _normalizeTopic(rawTopic);
+
+      final String? oldTopic = prefs.getString("timezone_topic");
+
+      if (oldTopic != null && oldTopic != newTopic) {
+        await FirebaseMessaging.instance.unsubscribeFromTopic(oldTopic);
+        print("🗑️ UNSUBSCRIBED FROM OLD TOPIC: $oldTopic");
+      }
+
+      await FirebaseMessaging.instance.subscribeToTopic(newTopic);
+      await prefs.setString("timezone_topic", newTopic);
+      print("✅ SUBSCRIBED TO TOPIC: $newTopic");
+
+    } catch (e) {
+      print("❌ SMART SUBSCRIPTION FAILED: $e");
+    }
   }
 
   Future<void> _requestPermission() async {
@@ -309,7 +359,7 @@ class NotificationService {
       customSound = const RawResourceAndroidNotificationSound('alert_sound');
       fullScreenIntent = true;
     } else {
-      playSound = false;
+      playSound = true;
     }
 
     final AndroidNotificationDetails androidDetails =
@@ -371,7 +421,9 @@ Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
     "Channel ID: ${android?.channelId ?? message.data['android_channel_id']}",
   );
 
-  await Firebase.initializeApp();
+  print("BG RAW : ${message.toMap()}");
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final fln = FlutterLocalNotificationsPlugin();
   const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
   const initSettings = InitializationSettings(android: androidInit);
@@ -439,7 +491,6 @@ void main() async {
   timezone.initializeTimeZones();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
   FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
 
   // === Re-add minimal OneSignal ===
@@ -451,13 +502,28 @@ void main() async {
   //   openNotificationListScreen();
   // });
 
+  //FCM TOKEN
+  try {
+    final token = await FirebaseMessaging.instance.getToken();
+    print("🔥 FCM TOKEN: $token");
+  } catch (e) {
+    debugPrint("⚠️ FCM token fetch failed (non-fatal): $e");
+    // App continues normally — token will be fetched later
+  }
+
+
   await NotificationService().initializeNotificationChannels();
 
   final currentUser = FirebaseAuth.instance.currentUser;
-  await NotificationService.initialize(
-    currentUserId: currentUser?.uid ?? '',
-    collectionName: 'users',
-  );
+
+  try {
+    await NotificationService.initialize(
+      currentUserId: currentUser?.uid ?? '',
+      collectionName: 'users',
+    );
+  } catch (e) {
+    debugPrint("⚠️ NotificationService init failed (non-fatal): $e");
+  }
 
   runApp(const MyApp());
 }
