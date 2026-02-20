@@ -14,6 +14,7 @@ import 'package:rafahiyatourism/view/admin_side_code/data/subAdminProvider/admin
 
 import '../../provider/user_login_provider.dart';
 import 'get_time_zone.dart';
+import 'mosque_subscription_manager.dart';
 
 class SplashServices {
   Future<bool> checkLogin(BuildContext context) async {
@@ -94,5 +95,6 @@ class SplashServices {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('userData');
     await prefs.setBool('isLoggedIn', false);
+    await MosqueSubscriptionManager.unsubscribeAll();
   }
 }

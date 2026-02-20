@@ -61,6 +61,7 @@ class _MasjidSettingsScreenState extends State<MasjidSettingsScreen> {
     if (mounted) {
       setState(() {
         final mosqueData = multiMosqueProvider.getMosqueData(widget.tabIndex);
+
         mosqueNameController.text = mosqueData?['name'] ?? '';
 
         addressController.text = mosqueData?['address'] ?? '';
@@ -100,7 +101,8 @@ class _MasjidSettingsScreenState extends State<MasjidSettingsScreen> {
               builder: (context, provider, child) {
                 final mosqueData = provider.getMosqueData(widget.tabIndex);
                 final mosqueUid = mosqueData?['uid'];
-
+              print("ID:: ${mosqueUid}");
+              print("ID:: ${widget.tabIndex}");
                 return TextButton(
                   onPressed: () async {
                     if (mosqueUid == null) {

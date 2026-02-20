@@ -267,23 +267,23 @@ class NotificationService {
 
   static Future<void> subscribeToTimezoneTopicSmart() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final String timeZone = await GetTimeZone.setupTimezone();
-
-      // ✅ Normalize BEFORE subscribing
-      final String rawTopic = timeZone.replaceAll('/', '_');
-      final String newTopic = _normalizeTopic(rawTopic);
-
-      final String? oldTopic = prefs.getString("timezone_topic");
-
-      if (oldTopic != null && oldTopic != newTopic) {
-        await FirebaseMessaging.instance.unsubscribeFromTopic(oldTopic);
-        print("🗑️ UNSUBSCRIBED FROM OLD TOPIC: $oldTopic");
-      }
-
-      await FirebaseMessaging.instance.subscribeToTopic(newTopic);
-      await prefs.setString("timezone_topic", newTopic);
-      print("✅ SUBSCRIBED TO TOPIC: $newTopic");
+      // final prefs = await SharedPreferences.getInstance();
+      // final String timeZone = await GetTimeZone.setupTimezone();
+      //
+      // // ✅ Normalize BEFORE subscribing
+      // final String rawTopic = timeZone.replaceAll('/', '_');
+      // final String newTopic = _normalizeTopic(rawTopic);
+      //
+      // final String? oldTopic = prefs.getString("timezone_topic");
+      //
+      // if (oldTopic != null && oldTopic != newTopic) {
+      //   await FirebaseMessaging.instance.unsubscribeFromTopic(oldTopic);
+      //   print("🗑️ UNSUBSCRIBED FROM OLD TOPIC: $oldTopic");
+      // }
+      //
+      // await FirebaseMessaging.instance.subscribeToTopic(newTopic);
+      // await prefs.setString("timezone_topic", newTopic);
+      // print("✅ SUBSCRIBED TO TOPIC: $newTopic");
 
     } catch (e) {
       print("❌ SMART SUBSCRIPTION FAILED: $e");

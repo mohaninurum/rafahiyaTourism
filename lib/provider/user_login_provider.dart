@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:rafahiyatourism/provider/locale_provider.dart';
 import 'package:rafahiyatourism/utils/services/splash_services.dart';
 import 'package:rafahiyatourism/view/bottom_navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/notification_services.dart';
 import '../utils/language/app_strings.dart';
 import '../utils/model/auth/auth_user_model.dart';
+import '../utils/services/get_time_zone.dart';
+import '../utils/services/mosque_subscription_manager.dart';
 import '../view/auth/google_sigin_detailScreen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -214,7 +218,9 @@ class UserLoginProvider with ChangeNotifier {
 
       if (user != null) {
         final userDoc = await _firestore.collection('users').doc(user.uid).get();
-
+        // String currentTimeZone = await GetTimeZone.setupTimezone();
+        // String topic = currentTimeZone.replaceAll('/', '_');
+        // await FirebaseMessaging.instance.subscribeToTopic(topic);
         // User exists - complete login
         // await NotificationService.initialize(currentUserId: userCredential.user!.uid, collectionName: "users");
         // Wait for OneSignal to be ready and save player ID FIRST
@@ -245,6 +251,7 @@ class UserLoginProvider with ChangeNotifier {
             city: '',
             email: user.email ?? '',
             profileImage: user.photoURL,
+            timeZone: ''
           );
 
           _currentUser = newUser;
@@ -364,12 +371,16 @@ class UserLoginProvider with ChangeNotifier {
       );
 
 
+      String userId = userCredential.user!.uid;
+
+// 👇 Save to SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userId', userId);
       // User exists - complete login
       // await NotificationService.initialize(currentUserId: userCredential.user!.uid, collectionName: "users");
 
       // Save player ID FIRST before navigation
       await savePlayerIdToFirestore(userCredential.user!.uid, 'users');
-
       await _fetchUserData(userCredential.user!.uid, context);
       await SplashServices.saveLoginData(true);
 
@@ -464,6 +475,7 @@ class UserLoginProvider with ChangeNotifier {
       await _auth.signOut();
       _currentUser = null;
       await SplashServices.clearUserData();
+      await MosqueSubscriptionManager.unsubscribeAll();
       notifyListeners();
     } catch (e) {
       setErrorMessage('${AppStrings.getString('errorSigningOut', currentLocale)}: ${e.toString()}');

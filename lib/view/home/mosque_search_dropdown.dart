@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../../provider/home_masjid_data_provider.dart';
 import '../../provider/multi_mosque_provider.dart';
 import '../../provider/mosque_search_provider.dart';
+import '../../utils/services/get_time_zone.dart';
+import '../../utils/services/mosque_subscription_manager.dart';
 
 class MosqueSearchDropdown extends StatefulWidget {
 
@@ -47,7 +49,7 @@ class _MosqueSearchDropdownState extends State<MosqueSearchDropdown> {
     }
   }
 
-  void _selectMosque(Map<String, dynamic> mosque) {
+  Future<void> _selectMosque(Map<String, dynamic> mosque) async {
     widget.controller.text = mosque['name'];
 
     final multiProvider = Provider.of<MultiMosqueProvider>(context, listen: false);
@@ -61,6 +63,10 @@ class _MosqueSearchDropdownState extends State<MosqueSearchDropdown> {
     final searchProvider = Provider.of<MosqueSearchProvider>(context, listen: false);
     searchProvider.clearSearch();
     FocusScope.of(context).unfocus();
+    await MosqueSubscriptionManager.updateMosqueSubscriptions(
+      [mosque['uid'], "xyz789"],
+    );
+
   }
   @override
   Widget build(BuildContext context) {

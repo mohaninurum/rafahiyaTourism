@@ -452,9 +452,9 @@ class SignupProvider with ChangeNotifier {
         imageUrl = await _uploadImageToStorage(_profileImage!, userCredential.user!.uid, context);
       }
 
-      String currentTimeZone = await GetTimeZone.setupTimezone();
-      String topic = currentTimeZone.replaceAll('/', '_');
-      await FirebaseMessaging.instance.subscribeToTopic(topic);
+      // String currentTimeZone = await GetTimeZone.setupTimezone();
+      // String topic = currentTimeZone.replaceAll('/', '_');
+      // await FirebaseMessaging.instance.subscribeToTopic(topic);
 
       final user = AuthUserModel(
         id: userCredential.user?.uid,
@@ -465,7 +465,7 @@ class SignupProvider with ChangeNotifier {
         country: _selectedCountry ?? '', // Use selected country
         email: emailController.text.trim(),
         profileImage: imageUrl ?? '',
-        timeZone: currentTimeZone
+        timeZone: ''
       );
 
       await _saveUserToFirestore(user);
